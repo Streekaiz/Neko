@@ -2876,6 +2876,10 @@
                     BackgroundColor3 = themes.preset.accent;
                 }); Library:Themify(Items.Accent1, "accent", "BackgroundColor3");
             end 
+
+            function Cfg.Show(vis : boolean)
+                Items.Toggle.Visible = vis
+            end
             
             function Cfg.Set(bool)
                 Library:Tween(Items.Accent2, {BackgroundTransparency = bool and 0 or 1})
@@ -3078,6 +3082,8 @@
                     BackgroundColor3 = rgb(255, 255, 255)
                 }); Items.Plus.Text = "+";
             end 
+
+            function Cfg.Show(vis : boolean) Items.Slider.Visible = vis end
 
             function Cfg.Set(value)
                 Cfg.Value = math.clamp(Library:Round(value, Cfg.Intervals), Cfg.Min, Cfg.Max)
@@ -3728,6 +3734,8 @@
                 -- 
             end 
 
+            function Cfg.Show(vis : boolean) Items.Dropdown.Visible = vis end
+
             function Cfg.RenderOption(text)       
                 local Button = Library:Create( "TextButton" , {
                     FontFace = Fonts[themes.preset.font];
@@ -3985,6 +3993,8 @@
                 Items.Name.Text = Text
             end 
 
+            function Cfg.Show(vis : boolean) Items.Label.Visible = vis end
+
             Cfg.Set(Cfg.Name)
 
             return setmetatable(Cfg, Library)
@@ -4129,6 +4139,8 @@
                     BackgroundColor3 = rgb(255, 255, 255)
                 });
             end 
+
+            function Cfg.Show(vis : boolean) Items.Textbox.Visible = vis end
             
             function Cfg.Set(text) 
                 Flags[Cfg.Flag] = text
@@ -4566,6 +4578,8 @@
             Items.Outline.MouseButton1Click:Connect(function()
                 Cfg.Callback()
             end)
+
+            function Cfg.Show(vis : boolean) Items.Button.Visible = vis end
             
             return setmetatable(Cfg, Library)
         end
@@ -4717,6 +4731,10 @@
             end 
 
             do -- Functions 
+                function Cfg.Show(vis : boolean)
+                    Items.List.Visible = vis
+                end
+
                 function Cfg.Set(value) 
                     if Cfg.VisualMode then 
                         return 
