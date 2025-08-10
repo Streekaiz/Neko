@@ -1,45 +1,83 @@
-local Library: { [any]: any } = {}
+local Environment : {[any] : any} = getgenv() or _G or {}
+local Author : string = "Streekaiz"
+local Repository : string = "Femboy"
+local LoadTick : number = tick()
 
-Library.__index = Library
+Environment["Femboy"] = {
+    ["Dependencies"] = {
+        ["Interface"] = {},
+        ["Clients"] = {},
+        ["Instances"] = {},
+        ["Miscallaenous"] = {},
+        ["Services"] = {},
+        ["Signals"] = {},
+        ["String"] = {}
+    }
+}
 
-Library.CompareDistance = function(self, Part: Part, SecondPart: Part): number
-	local Distance1: Vector3 = Part.Position
-	local Distance2: Vector3 = SecondPart.Position
-	local Magnitude: number = (Distance1 - Distance2).Magnitude
-
-	return Magnitude, Distance1, Distance2
+Environment["Femboy"]["Print"] = function(Data : string, Duration : number) : {any}?
+    if Environment["Femboy"]["Dependencies"]["Interface"]["Library"] then 
+        return Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Notification({
+            Name = Data, 
+            Lifetime = Duration or 3
+        })
+    else 
+        return warn(Data)
+    end
 end
 
-Library.Raycast = function(self, Part: Part, EndPoint: Vector3, Origin: Vector3, Distance: number, Ignore: { any })
-	Ignore = Ignore or {}
-	Distance = Distance or 2000
+for Name, Dependency in next, Environment["Femboy"]["Dependencies"] do 
+    local Success : boolean = false 
+    local Source : ((any) -> any) 
+    local PromptAnswered : boolean = true
+    local ContinueLoading : boolean = true 
+    
+    Success, Source = pcall(function(...)  
+        return loadstring(
+            game:HttpGet(
+                string.format(
+                    "https://raw.githubusercontent.com/%s/%s/main/Dependencies/%s.luau", 
+                    Author, 
+                    Repository, 
+                    Name
+                )
+            ),
+            Name
+        )
+    end)
 
-	local Direction: Vector3 = (EndPoint - Origin).Unit * Distance
+    if not Success then
+        local Notification = Environment["Femboy"]["Print"](string.format(
+            "Failed to load %s\nMessage: %s\nDo you wish to continue loading dependencies?",
+            Name,
+            tostring(Source)
+        ), 10)
 
-	local RaycastParams: RaycastParams = RaycastParams.new()
-	RaycastParams.FilterDescendantsInstances = Ignore
-	RaycastParams.FilterType = Enum.RaycastFilterType.Exclude
+        Notification:NotificationButton({Name = "Yes", Callback = function(... : any)
+            PromptAnswered = true
+            Notification.DestroyNotif()
+        end})
 
-	local Result: RaycastResult<BasePart>? = workspace:Raycast(Origin, Direction, RaycastParams)
-
-	return (Result and Result.Instance and Result.Instance:IsDescendantOf(Part)) == true, Result and Result.Instance
-end
-
-Library.MouseMove = function(self, Position: Vector2, Mouse: Vector2, SmoothingX: number, SmoothingY: number)
-	SmoothingX = SmoothingX or 1
-	SmoothingY = SmoothingY or 1
-
-	mousemoverel((Position.X - Mouse.X) * (SmoothingX / 100), (Position.Y - Mouse.Y) * (SmoothingY / 100))
-end
-
-Library.Clamp = function(self, Number : number, Max : number, Min : number) : number
-    if Number > Max then 
-        return Max 
-    elseif Number < Min then 
-        return Min 
+        Notification:NotificationButton({Name = "No", Callback = function(... : any)
+            PromptAnswered = true 
+            ContinueLoading = false 
+            Notification.DestroyNotif()
+        end})
     end
 
-    return Number 
-end
+    repeat
+        task.wait()
+    until PromptAnswered
 
-return Library
+    if not ContinueLoading then 
+        break 
+    end
+
+    Environment["Femboy"]["Dependencies"][Name] = Source() 
+    Environment["Femboy"]["Print"](string.format(
+        "Loaded %s in %sms",
+        Name,
+        tostring(tick() - LoadTick)
+    ))
+end 
+
