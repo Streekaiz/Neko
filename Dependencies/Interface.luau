@@ -3922,7 +3922,7 @@
         function Library:Label(properties)
             local Cfg = {
                 Name = properties.Name or "Label",
-                Alignment = properties.Side or properties.Alignment or "Center",
+                Alignment = properties.Side or properties.Alignment or "Left",
                 -- Other
                 Items = {};
             }
@@ -5532,7 +5532,7 @@
                     Items.ViewportFrame = Library:Create( "ViewportFrame" , {
                         Parent = Items.Background;
                         BorderColor3 = rgb(0, 0, 0);
-                        Size = UDim2.fromScale(1, 1);
+                        Size = UDim2.new(1, 0, 0, 200);
                         BorderSizePixel = 0;
                         ClipsDescendants = true;
                         BackgroundColor3 = themes.preset.misc_1
