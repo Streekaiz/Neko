@@ -5532,19 +5532,11 @@
                     Items.ViewportFrame = Library:Create( "ViewportFrame" , {
                         Parent = Items.Background;
                         BorderColor3 = rgb(0, 0, 0);
-                        Size = dim2(0, 200, 0, 200);
+                        Size = dim2(0, 200, 1, 0);
                         BorderSizePixel = 0;
                         ClipsDescendants = true;
                         BackgroundColor3 = themes.preset.misc_1
                     });	Library:Themify(Items.ViewportFrame, "misc_1", "BackgroundColor3")
-
-                    -- Library:Create( "Frame" , {
-                    --     Parent = Items.ViewportFrame;
-                    --     BorderColor3 = rgb(0, 0, 0);
-                    --     Size = dim2(0, 100, 0, 100);
-                    --     BorderSizePixel = 0;
-                    --     BackgroundColor3 = rgb(255, 255, 255)
-                    -- }); why do u even exist
                     
                     Library:Create( "UIListLayout" , {
                         Parent = Items.Holder;
