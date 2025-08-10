@@ -1,7 +1,3 @@
-if not game:IsLoaded() then 
-    game.Loaded:Wait()
-end
-
 local Environment : {[any] : any} = getgenv() or _G or {}
 local Author : string = "Streekaiz"
 local Repository : string = "Femboy"
@@ -21,21 +17,19 @@ Environment["Femboy"] = {
     }
 }
 
-local ModulesToLoad : {string} = {
-    "Interface",
-    "Clients",
-    "Instances",
-    "Miscallaenous",
-    "Servicdasdasdes",
-    "Signals",
-    "String"
-}
-
 local Games : {[number] : string} = {
     [17574618959] = "Baseplate"
 }
 
-for Index, Dependency in pairs(ModulesToLoad) do 
+for Index, Dependency in pairs({
+    "Interface",
+    "Clients",
+    "Instances",
+    "Miscallaenous",
+    "Services",
+    "Signals",
+    "String"
+}) do 
     local Success : boolean = false 
     local Source : ((any) -> any) 
     local ContinueLoading : boolean = true 
@@ -138,7 +132,7 @@ end
 
 loadstring(game:HttpGet(
     string.format(
-        "https://raw.githubusercontent.com/%s/%s/main/Dependencies/%s.luau",
+        "https://raw.githubusercontent.com/%s/%s/main/Games/%s.luau",
         Author,
         Repository,
         (Game ~= nil and Game) or "Universal"

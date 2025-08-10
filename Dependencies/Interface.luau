@@ -1946,7 +1946,6 @@
                 Items.Title.Text = string
             end 
 
-            -- recommended that you use richtext for automatic theming of the accent text.
             function Cfg.ChangeWatermarkTitle(string) 
                 Items.Text.Text = string
             end 
@@ -2025,6 +2024,8 @@
                     Cfg.Fps = 0
                 end 
             end)
+
+            Cfg.ChangeMenuTitle(Cfg.Name)
 
             return setmetatable(Cfg, Library)
         end 
