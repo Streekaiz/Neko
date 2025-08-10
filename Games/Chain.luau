@@ -51,12 +51,20 @@ Environment["Neko"]["Dependencies"]["Interface"]["Panel"] = Environment["Neko"][
                 Section:Toggle({Flag = "GameplayStamina", Name = "Infinite Stamina"})
                 Section:Toggle({Flag = "GameplayCombatStamina", Name = "Infinite Combat Stamina", Tooltip = {Title = "Combat Stamina", Text = "Combat stamina is used for melees."}})
                 Section:Toggle({Flag = "GameplayRecoil", Name = "No Recoil", Tooltip = {Title = "Gun Recoil", Text = "Removes recoil from ranged weapons."}})
-                Section:Label({Name = "Shop", Alignment = "Center"})
+                Section:Label({Name = "Shop", Side = "Center"})
                 Section:Toggle({Flag = "GameplayRefillXSaw", Name = "Refill XSaw", Tooltip = {Title = "Usage", Text = "This can drain your money."}})
                 Section:Toggle({Flag = "GameplayRefillAK47", Name = "Refill AK47", Tooltip = {Title = "Usage", Text = "This can drain your money."} })
                 Section:Toggle({Flag = "GameplayRefillPistol", Name = "Refill Pistol", Tooltip = {Title = "Usage", Text = "You need scrap to refill."}})
                 Section:Toggle({Flag = "GameplayRefillDB", Name = "Refill DB", Tooltip = {Title = "Usage", Text = "You need scrap to refill."}})
                 Section:Button({Flag = "GameplayOpenShop", Name = "Open Shop Menu"})
+                Section:Label({Name = "Movement", Side = "Center"})
+                Section:Toggle({Flag = "GameplayWalkSpeed", Name = "Walking Speed"}):Keybind({Flag = "GameplayWalkSpeedKey", Mode = "Toggle"})
+                Section:Slider({Flag = "GameplayWalkSpeedValue", Default = 50})
+                Section:Toggle({Flag = "GameplaySprintSpeed", Name = "Sprinting Speed"}):Keybind({Flag = "GameplaySprintSpeedKey", Mode = "Toggle"})
+                Section:Slider({Flag = "GameplaySprintSpeedValue", Default = 50})
+                Section:Toggle({Flag = "GameplayJumping", Name = "Enable Jumping"}):Keybind({Flag = "GameplayJumpingKey", Mode = "Toggle"})
+                Section:Slider({Flag = "GameplayJumpingValue", Default = 50})
+                Section:Toggle({Flag = "GameplayNoclip", Name = "Noclip"}):Keybind({Flag = "GameplayNoclipKey", Name = "Noclip", Mode = "Toggle"})
             end
         end
 
@@ -95,7 +103,9 @@ Environment["Neko"]["Dependencies"]["Interface"]["Panel"] = Environment["Neko"][
                         Tab.AddBox({Name = "Box"})
                     end
                 end
-                Collumn = Tab:Column({Fill = true}); do 
+            end
+        end
+        Collumn = Page:Column({Fill = true}); do 
             Section = Collumn:Section({Name = "World", Side = "Right"}); do 
                 Element = Section:Toggle({Flag = "worldAmbient", Name = "Ambience", Callback = function(State : boolean)
                     if State then 
@@ -171,8 +181,6 @@ Environment["Neko"]["Dependencies"]["Interface"]["Panel"] = Environment["Neko"][
                 Section:Slider({Flag = "colorCorrectionSaturation", Name = "Saturation", Max = 10, Min = -1, Default = 0, Decimal = 0.1, Callback = function(Value : number)
                     ColorCorrectionEffect.Instance.Saturation = Value 
                 end})
-            end
-        end
             end
         end
     end
