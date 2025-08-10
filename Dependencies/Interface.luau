@@ -2904,6 +2904,7 @@
             local Cfg = {
                 Name = properties.Name or nil,
                 Suffix = properties.Suffix or "",
+                Prefix = properties.Prefix or "",
                 Flag = properties.Flag or properties.Name or "Slider",
                 Callback = properties.Callback or function() end, 
 
@@ -3083,7 +3084,7 @@
             function Cfg.Set(value)
                 Cfg.Value = math.clamp(Library:Round(value, Cfg.Intervals), Cfg.Min, Cfg.Max)
 
-                Items.Value.Text = tostring(Cfg.Value) .. Cfg.Suffix
+                Items.Value.Text = Cfg.Prefix .. tostring(Cfg.Value) .. Cfg.Suffix
 
                 Library:Tween(Items.Accent, 
                     {Size = dim2((Cfg.Value - Cfg.Min) / (Cfg.Max - Cfg.Min), 0, 1, 0)
@@ -3921,7 +3922,7 @@
         function Library:Label(properties)
             local Cfg = {
                 Name = properties.Name or "Label",
-
+                Alignment = properties.Side or properties.Alignment or "Center",
                 -- Other
                 Items = {};
             }
@@ -3969,7 +3970,7 @@
                     BorderSizePixel = 0;
                     BorderColor3 = rgb(0, 0, 0);
                     BackgroundTransparency = 1;
-                    TextXAlignment = Enum.TextXAlignment.Left;
+                    TextXAlignment = Enum.TextXAlignment[Cfg.Alignment];
                     FontFace = Fonts[themes.preset.font];
                     ZIndex = 2;
                     TextSize = 12;
@@ -4979,14 +4980,6 @@
                     if Window.Items.Holder.Visible then 
                         Library.Blur.Size = int
                     end 
-                end})
-                Section:Button({Name = "Test", Callback = function()
-                    local Notification = Library:Notification({Name = "Hello there!", Lifetime = 5})
-                    Notification:NotificationButton({Name = "Discard", Callback = function()
-                        Notification.DestroyNotif()
-                    end})
-                    Notification:NotificationButton({Name = "Make another", Callback = function()
-                    end})
                 end})
 
             return Tab 

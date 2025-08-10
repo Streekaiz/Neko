@@ -1,11 +1,11 @@
 local Environment : {[any] : any} = getgenv() or _G or {}
 local Author : string = "Streekaiz"
-local Repository : string = "Femboy"
+local Repository : string = "Neko"
 local LoadTick : number = tick()
 
 local Notification : {[any] : any}
 
-Environment["Femboy"] = {
+Environment["Neko"] = {
     ["Dependencies"] = {
         ["Interface"] = {},
         ["Clients"] = {},
@@ -51,13 +51,13 @@ for Index, Dependency in pairs({
 
     if not Success then
         if Index ~= 1 then 
-            if not Environment["Femboy"]["Dependencies"]["Interface"]["Window"] then 
-                Environment["Femboy"]["Dependencies"]["Interface"]["Window"] = Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Window({
-                    Name = "femboy.hook"
+            if not Environment["Neko"]["Dependencies"]["Interface"]["Window"] then 
+                Environment["Neko"]["Dependencies"]["Interface"]["Window"] = Environment["Neko"]["Dependencies"]["Interface"]["Library"]:Window({
+                    Name = "neko.hook"
                 })
             end 
 
-            Notification = Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Notification({
+            Notification = Environment["Neko"]["Dependencies"]["Interface"]["Library"]:Notification({
                 Name = string.format(
                     "Failed to load %s - Error: %s - Do you wish to continue loading?",
                     Dependency, 
@@ -88,7 +88,7 @@ for Index, Dependency in pairs({
             until AnsweredPrompt 
 
             if not ContinueLoading then 
-                Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Unload()
+                Environment["Neko"]["Dependencies"]["Interface"]["Library"]:Unload()
                 break 
             end
 
@@ -98,17 +98,17 @@ for Index, Dependency in pairs({
         end 
     end
 
-    Environment["Femboy"]["Dependencies"][Dependency] = Source() 
+    Environment["Neko"]["Dependencies"][Dependency] = Source() 
     
-    if not Environment["Femboy"]["Dependencies"]["Interface"]["Window"] then 
-        Environment["Femboy"]["Dependencies"]["Interface"]["Window"] = Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Window({
-            Name = "femboy.hook"
+    if not Environment["Neko"]["Dependencies"]["Interface"]["Window"] then 
+        Environment["Neko"]["Dependencies"]["Interface"]["Window"] = Environment["Neko"]["Dependencies"]["Interface"]["Library"]:Window({
+            Name = "neko.hook"
         })
     end 
 
     local CurrentTick = tick()
 
-    Environment["Femboy"]["Dependencies"]["Interface"]["Library"]:Notification({
+    Environment["Neko"]["Dependencies"]["Interface"]["Library"]:Notification({
         Name = string.format(
             "Loaded %s dependency in %sms",
             Dependency,
@@ -137,4 +137,4 @@ loadstring(game:HttpGet(
         Repository,
         (Game ~= nil and Game) or "Universal"
     )
-), "femboy")
+), "neko")
