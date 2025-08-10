@@ -1946,6 +1946,7 @@
                 Items.Title.Text = string
             end 
 
+            -- recommended that you use richtext for automatic theming of the accent text.
             function Cfg.ChangeWatermarkTitle(string) 
                 Items.Text.Text = string
             end 
@@ -2024,8 +2025,6 @@
                     Cfg.Fps = 0
                 end 
             end)
-
-            Cfg.ChangeMenuTitle(Cfg.Name)
 
             return setmetatable(Cfg, Library)
         end 
@@ -2904,7 +2903,6 @@
             local Cfg = {
                 Name = properties.Name or nil,
                 Suffix = properties.Suffix or "",
-                Prefix = properties.Prefix or "",
                 Flag = properties.Flag or properties.Name or "Slider",
                 Callback = properties.Callback or function() end, 
 
@@ -3084,7 +3082,7 @@
             function Cfg.Set(value)
                 Cfg.Value = math.clamp(Library:Round(value, Cfg.Intervals), Cfg.Min, Cfg.Max)
 
-                Items.Value.Text = Cfg.Prefix .. tostring(Cfg.Value) .. Cfg.Suffix
+                Items.Value.Text = tostring(Cfg.Value) .. Cfg.Suffix
 
                 Library:Tween(Items.Accent, 
                     {Size = dim2((Cfg.Value - Cfg.Min) / (Cfg.Max - Cfg.Min), 0, 1, 0)
@@ -3922,7 +3920,7 @@
         function Library:Label(properties)
             local Cfg = {
                 Name = properties.Name or "Label",
-                Alignment = properties.Side or properties.Alignment or "Left",
+                Alignment = properties.Alignment or properties.Side or "Left",
                 -- Other
                 Items = {};
             }
@@ -4981,6 +4979,15 @@
                         Library.Blur.Size = int
                     end 
                 end})
+                Section:Button({Name = "Test", Callback = function()
+                    local Notification = Library:Notification({Name = "Hello there!", Lifetime = 5})
+                    Notification:NotificationButton({Name = "Discard", Callback = function()
+                        Notification.DestroyNotif()
+                    end})
+                    Notification:NotificationButton({Name = "Make another", Callback = function()
+                    end})
+                end})
+            -- 
 
             return Tab 
         end
@@ -5475,7 +5482,7 @@
 
                     Library:Create( "UIPadding" , {
                         Parent = Items.Title;
-                        PaddingRight = dim(0, 7);
+                        PaddingRight = dim(0, 5);
                         PaddingLeft = dim(0, 7)
                     });
 
@@ -5532,12 +5539,20 @@
                     Items.ViewportFrame = Library:Create( "ViewportFrame" , {
                         Parent = Items.Background;
                         BorderColor3 = rgb(0, 0, 0);
-                        Size = UDim2.new(1, 0, 0, 200);
+                        Size = dim2(1, 0, 0, 200);
                         BorderSizePixel = 0;
                         ClipsDescendants = true;
                         BackgroundColor3 = themes.preset.misc_1
                     });	Library:Themify(Items.ViewportFrame, "misc_1", "BackgroundColor3")
 
+                    -- Library:Create( "Frame" , {
+                    --     Parent = Items.ViewportFrame;
+                    --     BorderColor3 = rgb(0, 0, 0);
+                    --     Size = dim2(0, 100, 0, 100);
+                    --     BorderSizePixel = 0;
+                    --     BackgroundColor3 = rgb(255, 255, 255)
+                    -- }); why do u even exist
+                    
                     Library:Create( "UIListLayout" , {
                         Parent = Items.Holder;
                         Padding = dim(0, -1);
@@ -8729,7 +8744,7 @@
         end
     end
 
-Esp.Loop = RunService:BindToRenderStep("Run Loop", 400, Esp.Update)
+ Esp.Loop = RunService:BindToRenderStep("Run Loop", 400, Esp.Update)
 
 return {
     ["Library"] = Library, 
