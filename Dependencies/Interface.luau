@@ -5539,7 +5539,9 @@
                     Items.ViewportFrame = Library:Create( "ViewportFrame" , {
                         Parent = Items.Background;
                         BorderColor3 = rgb(0, 0, 0);
-                        Size = dim2(1, 0, 0, 200);
+                        Size = dim2(0, 200, 0, 200);
+                        AnchorPoint = Vector2.new(0.5, 0.5);
+                        Position = UDim2.fromScale(0.5, 0.5);
                         BorderSizePixel = 0;
                         ClipsDescendants = true;
                         BackgroundColor3 = themes.preset.misc_1
