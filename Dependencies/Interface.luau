@@ -5475,7 +5475,7 @@
 
                     Library:Create( "UIPadding" , {
                         Parent = Items.Title;
-                        PaddingRight = dim(0, 5);
+                        PaddingRight = dim(0, 7);
                         PaddingLeft = dim(0, 7)
                     });
 
@@ -5532,12 +5532,12 @@
                     Items.ViewportFrame = Library:Create( "ViewportFrame" , {
                         Parent = Items.Background;
                         BorderColor3 = rgb(0, 0, 0);
-                        Size = dim2(0, 200, 1, 0);
+                        Size = UDim2.fromScale(1, 1);
                         BorderSizePixel = 0;
                         ClipsDescendants = true;
                         BackgroundColor3 = themes.preset.misc_1
                     });	Library:Themify(Items.ViewportFrame, "misc_1", "BackgroundColor3")
-                    
+
                     Library:Create( "UIListLayout" , {
                         Parent = Items.Holder;
                         Padding = dim(0, -1);
